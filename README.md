@@ -1,5 +1,5 @@
 # my-project
-
+[截图](./static/cut.png)
 npm版本需要大于3.0
 检查npm版本
 `npm -v`
