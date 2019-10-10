@@ -15,7 +15,7 @@ npm版本需要大于3.0
 `npm install vue`
 
 下载本资源
-`git clone [URL]`
+`git clone https://github.com/wuyve/vue-chart.git`
 
 进入到项目中
 `cd chart`
