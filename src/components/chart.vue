@@ -243,7 +243,8 @@ export default {
     background: #B0DA91;
     position: relative;
     right: 45px;
-    width:auto;
+    /* width:auto; */
+    width:fit-content;
     height:auto;
     text-align: left;
     word-break:break-all;
