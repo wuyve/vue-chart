@@ -1,20 +1,24 @@
 // 聊天窗口
 <template>
   <div>
+    <!-- 左边的聊天框 -->
     <div class="chart-left">
       <div class="head">
         <img src="/../static/head.png">
         <span>chart 1</span>
       </div>
+      <!-- 聊天信息部分 -->
       <div class="mybody">
         <li v-for="item in data" :key='item.key' class="chartItems">
           <span>{{item.date}}</span>
+          <!-- 发送信息方发出去的消息 -->
           <div v-if="item.id === 'my'" class="my">
             <div class="mydata">
               <p class="mypop">{{item.data}}</p>
               <img class="myIcon" src="/../static/myIcon.png">
             </div>
           </div>
+          <!-- 接收的消息 -->
           <div v-if="item.id === 'friends'" class="friends">
             <div class="friendsData">
               <img class="friendsIcon" src="/../static/head.png">
@@ -23,6 +27,7 @@
           </div>
         </li>
       </div>
+      <!-- 输入内容和发送区 -->
       <div class="send">
         <el-input
         @keyup.enter.exact.native="sendMsg()"
@@ -32,23 +37,27 @@
           :autosize="{ minRows: 1, maxRows: 2}"
           v-model="textarea">
         </el-input>
-        <el-button size="small" class="button" slot="append" @click="sendMsg()"><img src="/../static/send.png"></el-button>
+        <el-button size="small" class="button" slot="append" :disabled="show" @click="sendMsg()"><img src="/../static/send.png"></el-button>
       </div>
     </div>
+    <!-- 右边聊天框 -->
     <div class="chart-right">
       <div  class="head">
         <img src="/../static/myIcon.png">
         <span>chart 2</span>
       </div>
+      <!-- 聊天信息部分 -->
       <div class="mybody">
         <li v-for="item in data" :key='item.key' class="chartItems">
           <span>{{item.date}}</span>
+          <!-- 发送信息方发出去的消息 -->
           <div v-if="item.id === 'my'" class="friends-right">
             <div class="friendsData-right">
               <p class="frinedspop-right">{{item.data}}</p>
               <img class="friendsIcon-right" src="/../static/myIcon.png">
             </div>
           </div>
+          <!-- 接收的消息 -->
           <div v-if="item.id === 'friends'" class="my-right">
             <div class="mydata-right">
               <img class="myIcon-right" src="/../static/head.png">
@@ -57,6 +66,7 @@
           </div>
         </li>
       </div>
+      <!-- 输入内容和发送区 -->
       <div class="send">
         <el-input
         @keyup.enter.exact.native="sendMsgRight()"
@@ -66,20 +76,20 @@
           :autosize="{ minRows: 1, maxRows: 2}"
           v-model="textareaRight">
         </el-input>
-        <el-button size="small" class="button" slot="append" @click="sendMsgRight()"><img src="/../static/send.png"></el-button>
+        <el-button size="small" class="button" slot="append" :disabled="showRight" @click="sendMsgRight()"><img src="/../static/send.png"></el-button>
       </div>
     </div>
   </div>
 </template>
 <script>
-// import bus from '@/components/eventBus'
-// import Routers from '@/router'
 import $ from 'jquery'
 export default {
   data () {
     return {
-      textarea: '',
-      textareaRight: '',
+      textarea: '',  // 左边输入框
+      textareaRight: '',  // 右边输入框
+      show: true,
+      showRight: true,
       data: [
         {
           id: 'my',
@@ -98,14 +108,31 @@ export default {
     }
   },
   mounted () {
+    // 加载完毕后消息显示至最底层，srcollTop内的参数根据已存在的消息条数计算
     let aa = $('.mybody').scrollTop(500)
-    console.log(aa)
+    // console.log(aa)
   },
   updated () {
+    // 发送数据后，视图更新时滚动条显示最底部
+    // srcollTop内的参数根据已存在的消息条数计算
     $('.mybody').scrollTop(2500 * this.key)
+    // 右边输入框为空时，按钮为禁用状态
+    if (this.textareaRight === '') {
+      this.showRight = true
+    } else {
+      this.showRight = false
+    }
+    // 左边输入框为空时，按钮为禁用状态
+    if (this.textarea === '') {
+      this.show = true
+    } else {
+      this.show = false
+    }
   },
   methods: {
+    // 左边聊天框发送消息函数
     sendMsg: function () {
+      // 检测URL
       /* eslint-disable */
       let reg = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/
       if (this.textarea.match(reg)) {
@@ -113,13 +140,14 @@ export default {
         console.log(url)
       }
       console.log(this.textarea)
-      if (this.textarea === '') {
+      // 发送字数不能超过3420字（同QQ）
+      if (this.textarea.length >= 3420) {
         this.$message({
-          message: '发送不能为空',
+          message: '字数过长，不能超过3420字',
           type: 'warning',
           center: true
         })
-      } else if (this.textarea !== '') {
+      } else {
         let obj = {}
         obj.data = this.textarea.replace('\n', '\n')
         obj.date = new Date().toLocaleString()
@@ -127,199 +155,40 @@ export default {
         obj.key = this.key++
         this.data.push(obj)
         this.textarea = ''
+        this.show = true
       }
     },
-     sendMsgRight: function () {
-      let srcoll = document.documentElement.scrollTop
-      console.log(srcoll)
+    // 右边聊天框发送信息
+    sendMsgRight: function () {
       console.log(this.textareaRight)
-      if (this.textareaRight === '') {
+      // 发送字数不能超过3420字（同QQ）
+      if (this.textareaRight.length >= 3420) {
         this.$message({
-          message: '发送不能为空',
+          message: '字数过长，不能超过3420字',
           type: 'warning',
           center: true
         })
-      } else if (this.textareaRight !== '') {
-        if (this.textareaRight.length >= 3420) {
-          this.$message({
-            message: '字数过长，不能超过3420字',
-            type: 'warning',
-            center: true
-          })
-        } else {
-          let obj = {}
-          obj.data = this.textareaRight.replace('\n', '\n')
-          obj.date = new Date().toLocaleString()
-          obj.id = 'friends'
-          obj.key = this.key++
-          this.data.push(obj)
-          this.textareaRight = ''
-        }
+      } else {
+        let obj = {}
+        obj.data = this.textareaRight.replace('\n', '\n')
+        obj.date = new Date().toLocaleString()
+        obj.id = 'friends'
+        obj.key = this.key++
+        this.data.push(obj)
+        this.textareaRight = ''
+        this.showRight = true
       }
     },
+   // 左边输入框换行
     getKeycode: function () {
       this.textarea = this.textarea + '\n'
     },
+    // 右边输入框换行
     getKeycodeRight: function () {
-      this.textarea = this.textarea + '\n'
-    },
-    bottomshow: function () {
-      let count = 0
-      let interval = setInterval(() => {
-        if (count > 200) {
-          clearInterval(interval)
-        }
-        count++
-        if ($('.mybody').scrollTop !== $('.mybody').scrollHeight) {
-          $('.mybody').scrollTop = $('.mybody').scrollHeight
-          console.log($('.mybody').scrollTop)
-        }
-        if ($('.mybody').scrollTop === $('.mybody').scrollHeight) {
-          clearInterval(interval)
-        }
-      }, 0)
+      this.textareaRight = this.textareaRight + '\n'
     }
   }
 }
 </script>
-<style scoped>
-  .chart-left {
-    width: 640px;
-    height: 410px;
-    border: 1px solid black;
-    border-radius: 15px;
-    margin-left: 19px;
-  }
-  .head {
-    margin-top: 10px;
-  }
-  .mybody {
-    height: 300px;
-    overflow-y: auto;
-    background: #F1F3F4;
-  }
-  .input {
-    width: 557px;
-    height: 52px;
-    position: relative;
-    left: 0px;
-    bottom: -5px;
-  }
-  .send {
-    height: 23px;
-  }
-  .button {
-    position: relative;
-    top: 7px;
-    left: 0px;
-  }
-  .chartItems {
-    width: 100%;
-    padding: 0;
-    margin-top: 10px;
-    list-style: none;
-    margin-bottom: -30px;
-  }
-  .my {
-    width: 40%;
-    margin-left: 370px;
-  }
-  .myIcon {
-    position: relative;
-    bottom: 40px;
-    left: 104px;
-  }
-  .friends {
-    width: 40%;
-  }
-  .mydata {
-  }
-  .friendsData {
-  }
-  .mypop {
-    padding: 3px;
-    border: 1px solid #ccc;
-    border-radius: 0 10px;
-    background: #B0DA91;
-    position: relative;
-    right: 45px;
-    /* width:auto; */
-    width:fit-content;
-    height:auto;
-    text-align: left;
-    word-break:break-all;
-    white-space: pre-line;
-  }
-  .frinedspop {
-    padding: 3px;
-    border: 1px solid #ccc;
-    border-radius: 10px 0;
-    position: relative;
-    left: 44px;
-    top: -40px;
-    width:auto;
-    height:auto;
-    text-align: left;
-    word-break:break-all;
-    white-space: pre-line;
-  }
-  .friendsIcon {
-    position: relative;
-    left: -100px;
-    top: 17px;
-  }
-  .chart-right {
-    width: 640px;
-    height: 410px;
-    border: 1px solid black;
-    border-radius: 15px;
-    margin: -411px 0px 0px 692px;
-  }
-  .friends-right {
-    width: 40%;
-  }
-  .my-right {
-    width: 40%;
-    margin-left: 370px;
-  }
-  .friendsData-right {
-  }
-  .mydata-right {}
-  .frinedspop-right {
-    padding: 3px;
-    border: 1px solid #ccc;
-    border-radius: 10px 0;
-    position: relative;
-    left: 46px;
-    top: 0px;
-    width: auto;
-    height: auto;
-    text-align: left;
-    word-break: break-all;
-    white-space: pre-line;
-  }
-  .mypop-right {
-    padding: 3px;
-    border: 1px solid #ccc;
-    border-radius: 0 10px;
-    background: #B0DA91;
-    position: relative;
-    right: 39px;
-    bottom: 35px;
-    width: auto;
-    height: auto;
-    text-align: left;
-    word-break: break-all;
-    white-space: pre-line;
-  }
-  .friendsIcon-right {
-    position: relative;
-    left: -100px;
-    top: -44px;
-  }
-  .myIcon-right {
-    position: relative;
-    bottom: -25px;
-    left: 104px;
-  }
+<style scoped src="../../static/chart.css">
 </style>

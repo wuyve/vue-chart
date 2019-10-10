@@ -1,0 +1,151 @@
+  .chart-left {
+    width: 640px;
+    height: 410px;
+    border: 1px solid black;
+    border-radius: 15px;
+    margin-left: 19px;
+  }
+  .head {
+    margin-top: 10px;
+  }
+  .mybody {
+    height: 300px;
+    overflow-y: auto;
+    background: #F1F3F4;
+  }
+  .input {
+    width: 557px;
+    height: 52px;
+    position: relative;
+    left: 0px;
+    bottom: -5px;
+  }
+  .send {
+    height: 23px;
+  }
+  .button {
+    position: relative;
+    top: 7px;
+    left: 0px;
+  }
+  .chartItems {
+    width: 100%;
+    padding: 0;
+    margin-top: 10px;
+    /* 去掉li的小圆点 */
+    list-style: none;
+    margin-bottom: -30px;
+  }
+  .my {
+    width: 40%;
+    margin-left: 370px;
+  }
+  .myIcon {
+    position: relative;
+    bottom: 40px;
+    left: 104px;
+  }
+  .friends {
+    width: 40%;
+  }
+  .mydata {
+  }
+  .friendsData {
+  }
+  .mypop {
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 0 10px;
+    background: #B0DA91;
+    position: relative;
+    right: 45px;
+    width:auto;
+    height:auto;
+    /* 文本左对齐 */
+    text-align: left;
+    /* 取消汉字与英文之间的换行 */
+    word-break:break-all;
+    /* 遇到\n换行 */
+    white-space: pre-line;
+  }
+  .frinedspop {
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 10px 0;
+    position: relative;
+    left: 44px;
+    top: -40px;
+    width:auto;
+    height:auto;
+    /* 文本左对齐 */
+    text-align: left;
+    /* 取消汉字与英文之间的换行 */
+    word-break:break-all;
+    /* 遇到\n换行 */
+    white-space: pre-line;
+  }
+  .friendsIcon {
+    position: relative;
+    left: -100px;
+    top: 17px;
+  }
+  .chart-right {
+    width: 640px;
+    height: 410px;
+    border: 1px solid black;
+    border-radius: 15px;
+    margin: -411px 0px 0px 692px;
+  }
+  .friends-right {
+    width: 40%;
+  }
+  .my-right {
+    width: 40%;
+    margin-left: 370px;
+  }
+  .friendsData-right {
+  }
+  .mydata-right {}
+  .frinedspop-right {
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 10px 0;
+    position: relative;
+    left: 46px;
+    top: 0px;
+    width: auto;
+    height: auto;
+    /* 文本左对齐 */
+    text-align: left;
+    /* 取消汉字与英文之间的换行 */
+    word-break:break-all;
+    /* 遇到\n换行 */
+    white-space: pre-line;
+  }
+  .mypop-right {
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 0 10px;
+    background: #B0DA91;
+    position: relative;
+    right: 39px;
+    bottom: 35px;
+    width: auto;
+    height: auto;
+    /* 文本左对齐 */
+    text-align: left;
+    /* 取消汉字与英文之间的换行 */
+    word-break:break-all;
+    /* 遇到\n换行 */
+    white-space: pre-line;
+  }
+  .friendsIcon-right {
+    position: relative;
+    left: -100px;
+    top: -44px;
+  }
+  .myIcon-right {
+    position: relative;
+    bottom: -25px;
+    left: 104px;
+  }
