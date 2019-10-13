@@ -135,7 +135,7 @@
     /* 文本左对齐 */
     text-align: left;
     /* 取消汉字与英文之间的换行 */
-    word-break:break-all;
+    word-break: break-all;
     /* 遇到\n换行 */
     white-space: pre-line;
   }

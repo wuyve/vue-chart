@@ -135,9 +135,12 @@ export default {
       // 检测URL
       /* eslint-disable */
       let reg = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/
-      if (this.textarea.match(reg)) {
-        let url = this.textarea.match(reg)[0]
-        console.log(url)
+      // 如果输入中有网址
+      if (reg.test(this.textarea)) {
+        let result = this.textarea.match(reg)[0];
+        let startStr = this.textarea.substring(0, this.textarea.search(reg));
+        let endStr = this.textarea.substring(this.textarea.search(reg) + result.length);
+        this.textarea = `${startStr}<a href="${result}">${endStr}`;
       }
       console.log(this.textarea)
       // 发送字数不能超过3420字（同QQ）
